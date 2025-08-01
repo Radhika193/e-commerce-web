@@ -1,0 +1,23 @@
+.checkout{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 1400px;
+    background-color: white;
+    height: max-content;
+}
+
+.checkout_heading{
+    margin-right: 10px;
+    padding: 10px;
+    border-bottom:1px solid lightgray ;
+    
+}
+.checkout_right{
+    display: flex;
+    justify-content: space-between;
+}
+.checkout_title{
+    margin-left: 13px;
+}
