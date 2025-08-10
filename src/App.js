@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Home from './components/Home'
-import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Checkout from './components/Checkout';
 import Login from './components/Login';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -17,30 +19,31 @@ const promise = loadStripe('pk_test_51Rklbc4cnDKyv5M0Y1zNwuidzCz9JXnzyC0poxkR9kK
 
 function App() {
 
-  const [,dispatch] =useStateValue();
+  const [, dispatch] = useStateValue();
 
-  useEffect(()=>{
-     onAuthStateChanged(auth,(authUser) =>{
-      console.log('THE USER IS >>>' ,authUser);
+  useEffect(() => {
+    onAuthStateChanged(auth, (authUser) => {
+      console.log('THE USER IS >>>', authUser);
 
-      if(authUser){
+      if (authUser) {
         //the user just logged in / the user was logged in and refresh the page
 
         dispatch({
-          type:'SET_USER',
-          user:authUser
+          type: 'SET_USER',
+          user: authUser
         });
-      }else{
+      } else {
         //the user is logged out
         dispatch({
           type: 'SET_USER',
-          user:null
+          user: null
         });
       }
-     });
-  },[dispatch])
+    });
+  }, [dispatch])
 
   return (
+
     <Router>
     <div className="app">
       {/* header here means render the header regardless(always) and then based on the routes render other components too or 
@@ -91,9 +94,22 @@ function App() {
             }
         />
       </Routes>
-      
+      <ToastContainer 
+          position="top-right"
+          autoClose={2000}
+           style={{ marginTop: '70px' }} 
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light" // optional: you can use "dark" or "light"
+        />
     </div>
     </Router>
+    
   );
 }
 
