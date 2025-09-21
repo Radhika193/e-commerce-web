@@ -16,7 +16,7 @@ function Subtotal() {
    const handleGiftCheckbox = () => {
       setIsGiftChecked(!isGiftChecked);
    };
-
+   
 
   return (
     <div className='subtotal'>

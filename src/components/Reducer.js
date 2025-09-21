@@ -1,59 +1,75 @@
 export const initialState = {
-    basket:[],
-    value:0,
-    user:null
+    basket: [],
+    value: 0,
+    user: null
 };
 
-export const getBasketTotal=({basket})=>{
+export const getBasketTotal = ({ basket }) => {
     return basket?.reduce((total, item) => total + item.price, 0);
 }
 
-const reducer = (state,action) =>{
+const reducer = (state, action) => {
 
-    switch(action.type){
-        case 'ADD_TO_BASKET' :
-             if (!action.item || !action.item.id) {
-    console.warn('Attempted to add invalid item to basket:', action.item);
-    return state;
-  }
+    switch (action.type) {
+        case 'ADD_TO_BASKET':
+            if (!action.item || !action.item.id) {
+                console.warn('Attempted to add invalid item to basket:', action.item);
+                return state;
+            }
             return {
-                ...state ,
-                basket: [...state.basket,action.item],
+                ...state,
+                basket: [...state.basket, action.item],
                 value: state.value + action.item.price,
             };
 
         case 'EMPTY_BASKET':
-            return{
+            return {
                 ...state,
-                basket:[]
+                basket: []
             }
 
         case 'REMOVE_FROM_BASKET':
             const index = state.basket.findIndex(
-                (item) => item.id === action.id   
+                (item) => item.id === action.id
             )
 
-            if(index >= 0){
-                let updatedBasket=[...state.basket];
-                const removedItem=updatedBasket.splice(index,1);
+            if (index >= 0) {
+                let updatedBasket = [...state.basket];
+                const removedItem = updatedBasket.splice(index, 1);
 
                 return {
                     ...state,
                     basket: updatedBasket,
-                    value: state.value - removedItem[0].price,
+                    value: state.value - (removedItem[0].price * removedItem[0].quantity),
                 };
             }
-            else{
+            else {
                 console.warn(`cant remove product (id:${action.id}) as it is not in the basket`)
                 return state;
             }
 
         case 'SET_USER':
-            return{
+            return {
                 ...state,
-                user:action.user
+                user: action.user
             }
 
+        case 'UPDATE_QUANTITY':
+
+            const updatedBasket = state.basket.map(item =>
+                item.id === action.id ? { ...item, quantity: action.quantity } : item
+            );
+
+            // Calculate new total value
+            const newValue = updatedBasket.reduce(
+                (total, item) => total + item.price * item.quantity,0
+            );
+
+            return {
+                ...state,
+                basket: updatedBasket,
+                value: newValue
+            };
         default:
             return state;
     }
