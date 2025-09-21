@@ -5,13 +5,7 @@ import { useStateValue } from './StateProvider';
 import Order from './Order';
 import firebase from 'firebase/compat/app';
 import NewUser from './NewUser';
-  import {
-    collection,
-    doc,
-    query,
-    orderBy,
-    onSnapshot
-  } from 'firebase/firestore';
+  import {collection, doc, query, orderBy, onSnapshot} from 'firebase/firestore';
 
 
 function Orders() {

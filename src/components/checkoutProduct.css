@@ -6,12 +6,14 @@
 .checkoutProduct_info{
     padding-left:20px ;
     margin-top: 45px;
+
 }
 
 .checkoutProduct_info > button{
     background-color: rgb(249, 219, 122);
      border: 1px solid;
-     margin-top: 10px;
+     margin-top: 20px;
+
      margin-top: 10px;
      border-color: orange;
      color: black;
@@ -25,6 +27,7 @@
 }
 .checkoutProduct_rating{
     display: flex;
+    padding-bottom: 20px;
 }
 
 .checkoutProduct_title{
