@@ -4,12 +4,18 @@ import {useStateValue} from "./StateProvider";
 import { type } from '@testing-library/user-event/dist/type';
 import QuantityControl from './QuantityControl';
 
-function CheckoutProduct({id,image,title,price,rating,hideButton}) {
+function CheckoutProduct({id,image,title,price,rating,quantity: orderQuantity,hideButton}) {
     
-    const [{basket},dispatch]=useStateValue() ; 
+    const [{basket,value},dispatch]=useStateValue() ; 
 
     const itemInBasket = basket.find(item => item.id === id);
-    const quantity = itemInBasket ? itemInBasket.quantity : 0;
+    const liveQuantity = itemInBasket ? itemInBasket.quantity : 0;
+
+    const calculateBasketTotal = (basket) => {
+  return basket?.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
+};
+    //console.log('val',value)
+    //console.log('quant',basket?[0].quantity)
 
     const removeFromBasket = () => {
       dispatch({
@@ -18,29 +24,29 @@ function CheckoutProduct({id,image,title,price,rating,hideButton}) {
       });
     };
 
-      const increment = () => {
-    const newQty = quantity + 1;
+  const increment = () => {
+  dispatch({
+    type: 'UPDATE_QUANTITY',
+    id,
+    quantity: liveQuantity + 1   // 👈 use quantity
+  });
+}
+
+const decrement = () => {
+  if (liveQuantity > 1) {
     dispatch({
       type: 'UPDATE_QUANTITY',
       id,
-      quantity: newQty
+      quantity: liveQuantity - 1   // 👈 use quantity
+    });
+  } else {
+    dispatch({
+      type: 'REMOVE_FROM_BASKET',
+      id
     });
   }
+}
 
-  const decrement = () => {
-    if (quantity > 1) {
-      dispatch({
-        type: 'UPDATE_QUANTITY',
-        id,
-        quantity: quantity - 1
-      });
-    } else {
-      dispatch({
-        type: 'REMOVE_FROM_BASKET',
-        id
-      });
-    }
-  }
 
   return (
     <div className='checkoutProduct'>
@@ -58,23 +64,23 @@ function CheckoutProduct({id,image,title,price,rating,hideButton}) {
             .map( ()=>(<p>🌟</p>))
             }
         </div>
-        {/* {!hideButton && (
-           <button onClick={removeFromBasket}>Remove from Basket</button>
-        )} */}
-         {!hideButton && quantity > 0 ? (
-          <>
-          <QuantityControl
-            quantity={quantity}
-            onIncrement={increment}
-            onDecrement={decrement}
-          />
-          <button onClick={removeFromBasket}>Remove</button>
-          </>
-          
-        ) : !hideButton ? (
-          <button onClick={removeFromBasket}>Remove</button>
-        ) : null}
         
+          {hideButton ? (
+          // Order history (from Firestore)
+          <p>Quantity: {orderQuantity}</p>
+        ) : liveQuantity > 0 ? (
+          // Basket checkout
+          <>
+            <QuantityControl
+              quantity={liveQuantity}
+              onIncrement={increment}
+              onDecrement={decrement}
+            />
+            <button onClick={removeFromBasket}>Remove</button>
+          </>
+        ) : (
+          <button onClick={removeFromBasket}>Remove</button>
+        )}
       </div>
     </div>
   )

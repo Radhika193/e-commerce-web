@@ -13,25 +13,29 @@ function Orders() {
   const [{ basket,value, user }, dispatch] = useStateValue();
   const [orders, setOrders] = useState([]);
 
-
+ // console.log(value)
+ // console.log(orders)
   useEffect(() => {
     if (user) {
       const userOrdersRef = collection(doc(collection(db, 'users'), user.uid), 'orders');
       const q = query(userOrdersRef, orderBy('created', 'desc'));
 
       const unsubscribe = onSnapshot(q, (snapshot) => {
+      //  console.log(snapshot.docs[1].data(), "fjbrfr")//this gives id , quantity inside basket
         setOrders(snapshot.docs.map(doc => ({
           id: doc.id,
-          data: doc.data()
+          data: doc.data(),
+          // quantity:doc[0].data()
         })));
       });
 
       return unsubscribe; // Clean up listener on unmount
     } else {
-      
       setOrders([]);
     }
   }, [user]);
+
+  
 
   return (
     <div className='orders'>

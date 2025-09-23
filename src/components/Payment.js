@@ -20,7 +20,7 @@ function Payment() {
 
     const stripe = useStripe();
     const elements = useElements();
-
+    // console.log(value)
 
 
     const [succeeded, setSucceeded] = useState(false);
@@ -33,6 +33,13 @@ function Payment() {
         //generate the special stripe secret which allows us to change a customer
 
         const getClientSecret = async () => {
+            const total = getBasketTotal({ basket }) * 100;
+    console.log("Basket total for Stripe:", total, basket);
+
+    if (total <= 0) {
+      console.warn("⚠️ Basket total is zero, not creating payment intent.");
+      return;
+    }
             try {
                 const response = await axios({
                     method: 'post',
@@ -51,6 +58,7 @@ function Payment() {
     console.log('clientSecret state:', clientSecret);
 
     console.log('the secret is >>>', clientSecret)
+    //console.log('basked ', basket[0].quantity)
 
     const handleSubmit = async (e) => {
         //do all the stripe stuff
@@ -73,14 +81,25 @@ function Payment() {
             });
             //paymentIntent = payment confirmation
             console.log('PaymentIntent:', paymentIntent);
+
+            const getBasketTotal = (basket) => {
+                return basket?.reduce((total, item) => {
+                    return total + item.price * (item.quantity || 1);
+                }, 0);
+            };
+        
+
+
             await setDoc(doc(collection(db, 'users', user?.uid, 'orders'), paymentIntent.id),
                 {
                     basket: basket,
-                    amount: paymentIntent.amount,
+                    amount: getBasketTotal(basket) * 100,
                     created: paymentIntent.created
-                }
+                },
+             //   console.log(paymentIntent.basket)
             );
-            // 4737 2722 7272 7279
+           // console.log(paymentIntent.amount)
+            // 424242424242424242424242
 
             setSucceeded(true);
             setError(null);
@@ -104,6 +123,8 @@ function Payment() {
         setDisabled(e.empty);
         setError(e.error ? e.error.message : "");
     }
+
+
 
     return (
         <div className='payment'>
@@ -141,6 +162,7 @@ function Payment() {
                                 image={item.image}
                                 price={item.price}
                                 rating={item.rating}
+                               quantity={item.quantity || 1}
                             />
                         ))}
                     </div>

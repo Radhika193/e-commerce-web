@@ -3,8 +3,11 @@ import "./header.css"
 import { Link } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import { auth } from '../firebase';
+import Product from './Product';
+import Home from './Home';
+import { useState } from 'react';
 
-function Header() {
+function Header({ searchVal, setSearchVal }) {
 
    const [{basket,user},dispatch] =useStateValue();
 
@@ -14,6 +17,7 @@ function Header() {
         auth.signOut();
       }
    }
+
 
   return (
     <div className='header'>
@@ -27,8 +31,14 @@ function Header() {
       
 
       <div className='header_search'>
-        <input
-        className='header_searchInput' type='text' />
+        {/* <input className='header_searchInput' type='text'>
+         </input> */}
+         <input
+          className="header_searchInput"
+          type="text"
+          value={searchVal}
+          onChange={(e) => setSearchVal(e.target.value)} // updating search text
+        />
         {/* Logo */}
         <img className='header_searchIcon' src='/images/search_icon2.png'></img>
       </div>
@@ -47,10 +57,12 @@ function Header() {
         </div>
         </Link>
 
+        <Link to='/YourPrime'>
         <div className='header_option'>
            <span className='header_optionLineOne'>Your</span>
            <span className='header_optionLineTwo'>Prime</span>
         </div>
+        </Link>
 
         <Link to="/checkout">
           <div className='header_optionBasket'>

@@ -14,12 +14,16 @@ import Payment from './components/Payment';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Orders from './components/Orders';
+import { useState } from 'react';
+import Product from './components/Product';
+import ProductData from './components/ProductData';
 
 const promise = loadStripe('pk_test_51Rklbc4cnDKyv5M0Y1zNwuidzCz9JXnzyC0poxkR9kKnKm9jb0Fw41Q3CGN5VKZ7BloaLGNwTi1o2CQ57kMHcbkC00FgcbvYJP');
 
 function App() {
 
   const [, dispatch] = useStateValue();
+  const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (authUser) => {
@@ -53,7 +57,7 @@ function App() {
         <Route path="/orders"
           element={
             <>
-              <Header></Header>
+              <Header  searchVal={searchVal} setSearchVal={setSearchVal}/>
               <Orders />
             </>
           }
@@ -68,7 +72,7 @@ function App() {
         <Route path="/checkout"
             element={
               <>
-                <Header />
+                <Header searchVal={searchVal} setSearchVal={setSearchVal} />
                 <Checkout />
               </>
             }
@@ -77,7 +81,7 @@ function App() {
             path="/payment"
             element={
               <>
-                <Header></Header>
+                <Header searchVal={searchVal} setSearchVal={setSearchVal} />
                 <Elements stripe={promise}>
                   <Payment />
                 </Elements>
@@ -88,10 +92,20 @@ function App() {
             path="/"
             element={
               <>
-                <Header />
-                <Home />
+                <Header  searchVal={searchVal} setSearchVal={setSearchVal} />
+                <Home searchVal={searchVal}/>
               </>
             }
+        />
+        <Route 
+            path="/YourPrime"
+            element={
+              <>
+                <Header searchVal={searchVal} setSearchVal={setSearchVal} />
+                <ProductData></ProductData>
+              </>
+            }
+
         />
       </Routes>
       <ToastContainer 
