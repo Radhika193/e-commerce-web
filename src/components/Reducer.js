@@ -2,64 +2,72 @@ export const initialState = {
     basket: [],
     value: 0,
     user: null,
-    productLists : [
-    {
-      id: "495630040",
-      title: "Art Forms in Nature by Ernst Haeckel .The Kindle Edition",
-      price: 1499,
-      image: "https://m.media-amazon.com/images/I/81YJl7eRp+L._AC_UY327_FMwebp_QL65_.jpg",
-      rating: 5
-    },
-    {
-      id: "455630041",
-      title: "Amazon Echo Dot (5th Gen) | Smart speaker with Bigger sound...",
-      price: 5499,
-      image: "https://m.media-amazon.com/images/I/81lGxS2ZisL._AC_UY327_FMwebp_QL65_.jpg",
-      rating: 4
-    },
-    {
-      id: "23564982157",
-      title: "AKLAM Women Embroidery Lace & Sequence Embroidery Chiffon Saree",
-      price: 2149,
-      image: "https://m.media-amazon.com/images/I/71ENdVjP63L._SY550_.jpg",
-      rating: 3
-    },
-    {
-      id: "23564982144",
-      title: "Apple iPad Air 11″ with M3 chip: Liquid Retina Display, 256GB...",
-      price: 67990,
-      image: "https://m.media-amazon.com/images/I/71jWCM3KVYL._SX425_.jpg",
-      rating: 5
-    },
-    {
-      id: "23564982145",
-      title: "Venzina® Mens Lightweight Athletic Jacket Stylish Full Zip Hoodie, Waterproof",
-      price: 1999,
-      image: "https://m.media-amazon.com/images/I/51Ko2vfkW1L._AC_UL480_FMwebp_QL65_.jpg",
-      rating: 5
-    },
-    {
-      id: "23564982146",
-      title: "American Tourister Liftoff+ with TSA Lock & 8 Wheel, 79 CM Large Hard PP Suitcase",
-      price: 3799,
-      image: "https://m.media-amazon.com/images/I/41bAQ3Gg--L._AC_UL480_FMwebp_QL65_.jpg",
-      rating: 5
-    },
-    {
-      id: "23564982167",
-      title: "ASICS Mens Gel-Contend B+ Lake Drive/Pure Silver Running Shoes",
-      price: 2149,
-      image: "https://m.media-amazon.com/images/G/31/img21/shoes/February/SS21/SPW/Iconic/5._SS400_QL85_.jpg",
-      rating: 4
-    },
-    {
-      id: "4954386850",
-      title: "VW 101 cm (40 inches) Playwall Frameless Series Full HD Android Smart LED TV",
-      price: 11999,
-      image: "https://m.media-amazon.com/images/I/81kcbyP-SXL._AC_UY327_FMwebp_QL65_.jpg",
-      rating: 4
-    }
-  ]
+    productLists: [
+        {
+            id: "495630040",
+            title: "Art Forms in Nature by Ernst Haeckel .The Kindle Edition",
+            price: 1499,
+            image: "https://m.media-amazon.com/images/I/81YJl7eRp+L._AC_UY327_FMwebp_QL65_.jpg",
+            rating: 5,
+            maxQuantity:100
+        },
+        {
+            id: "455630041",
+            title: "Amazon Echo Dot (5th Gen) | Smart speaker with Bigger sound...",
+            price: 5499,
+            image: "https://m.media-amazon.com/images/I/81lGxS2ZisL._AC_UY327_FMwebp_QL65_.jpg",
+            rating: 4,
+            maxQuantity:100
+        },
+        {
+            id: "23564982157",
+            title: "AKLAM Women Embroidery Lace & Sequence Embroidery Chiffon Saree",
+            price: 2149,
+            image: "https://m.media-amazon.com/images/I/71ENdVjP63L._SY550_.jpg",
+            rating: 3,
+            maxQuantity:100
+        },
+        {
+            id: "23564982144",
+            title: "Apple iPad Air 11″ with M3 chip: Liquid Retina Display, 256GB...",
+            price: 67990,
+            image: "https://m.media-amazon.com/images/I/71jWCM3KVYL._SX425_.jpg",
+            rating: 5,
+            maxQuantity:100
+        },
+        {
+            id: "23564982145",
+            title: "Venzina® Mens Lightweight Athletic Jacket Stylish Full Zip Hoodie, Waterproof",
+            price: 1999,
+            image: "https://m.media-amazon.com/images/I/51Ko2vfkW1L._AC_UL480_FMwebp_QL65_.jpg",
+            rating: 5,
+            maxQuantity:100
+        },
+        {
+            id: "23564982146",
+            title: "American Tourister Liftoff+ with TSA Lock & 8 Wheel, 79 CM Large Hard PP Suitcase",
+            price: 3799,
+            image: "https://m.media-amazon.com/images/I/41bAQ3Gg--L._AC_UL480_FMwebp_QL65_.jpg",
+            rating: 5,
+            maxQuantity:100
+        },
+        {
+            id: "23564982167",
+            title: "ASICS Mens Gel-Contend B+ Lake Drive/Pure Silver Running Shoes",
+            price: 2149,
+            image: "https://m.media-amazon.com/images/G/31/img21/shoes/February/SS21/SPW/Iconic/5._SS400_QL85_.jpg",
+            rating: 4,
+            maxQuantity:100
+        },
+        {
+            id: "4954386850",
+            title: "VW 101 cm (40 inches) Playwall Frameless Series Full HD Android Smart LED TV",
+            price: 11999,
+            image: "https://m.media-amazon.com/images/I/81kcbyP-SXL._AC_UY327_FMwebp_QL65_.jpg",
+            rating: 4,
+            maxQuantity:100
+        }
+    ],
 };
 
 export const getBasketTotal = ({ basket }) => {
@@ -81,9 +89,9 @@ const reducer = (state, action) => {
             };
 
         case 'ADD_ITEM':
-            return{
+            return {
                 ...state,
-                productLists:[...state.productLists, action.item]   
+                productLists: [...state.productLists, action.item], 
             }
 
         case 'EMPTY_BASKET':
@@ -126,7 +134,7 @@ const reducer = (state, action) => {
 
             // Calculate new total value
             const newValue = updatedBasket.reduce(
-                (total, item) => total + item.price * item.quantity,0
+                (total, item) => total + item.price * item.quantity, 0
             );
 
             return {

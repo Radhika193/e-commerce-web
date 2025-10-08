@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import SignIn from './SignIn';
 
 
 function Login() {
@@ -61,13 +62,14 @@ function Login() {
             <h5>Password</h5>
             <input type='password' value={password} onChange={e => setPassword(e.target.value)} placeholder='Password'/>
 
-            <button type='submit' onClick={signInHandler} className='login_signInButton'>Sign In</button>
+            <button type='submit' onClick={signInHandler} className='login_signInButton'>Sign In With ShopEase Account </button>
         </form>
 
         <p>
             By signing-in you agree to our Coonditions of Use & Sale.
             Please see our Privacy Notice and our Cookies Notice.
         </p>
+        <SignIn className='googleSignIn'></SignIn>
 
         <button onClick={registerHandler} className='login_registerButton'>Create your ShopEase Account</button>
       </div>

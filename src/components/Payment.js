@@ -124,8 +124,6 @@ function Payment() {
         setError(e.error ? e.error.message : "");
     }
 
-
-
     return (
         <div className='payment'>
             <div className='payment_container'>
@@ -163,6 +161,7 @@ function Payment() {
                                 price={item.price}
                                 rating={item.rating}
                                quantity={item.quantity || 1}
+                               maxQuantity={item.maxQuantity}
                             />
                         ))}
                     </div>

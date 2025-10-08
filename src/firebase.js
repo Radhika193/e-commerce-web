@@ -1,6 +1,6 @@
 // Import only what you need from Firebase v9+
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -20,5 +20,12 @@ const firebaseApp = initializeApp(firebaseConfig);
 // Export Firestore and Auth
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+  prompt: "select_account",
+});
+
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
 export { db, auth };

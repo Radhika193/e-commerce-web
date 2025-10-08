@@ -1,11 +1,13 @@
-    import React from 'react';
+import React from 'react';
+import { useStateValue } from './StateProvider';
 
     const QuantityControl = ({ quantity, onIncrement, onDecrement }) => {
+
       return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <button onClick={onDecrement}>-</button>
           <span style={{ margin: '0 10px' }}>{quantity}</span>
-          <button onClick={onIncrement}>+</button>
+          <button  onClick={onIncrement}>+</button>
         </div>
       );
     };

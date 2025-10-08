@@ -10,22 +10,15 @@ import './productData.css';
 function ProductData() {
 
 
-  const [{ productLists }, dispatch] = useStateValue('');
-
-  const [submissionMessage, setSubmissionMessage] = useState('');
-
-  // const [description, setdescription] = useState('');
-  // const [id, setid] = useState('');
-  // const [rating, setrating] = useState('');
-  // const [price, setprice] = useState('');
+  const [{ productLists, maxQuantity, flag }, dispatch] = useStateValue('');
 
   const [formData, setFormData] = useState({
     description: '',
     id: '',
     rating: '',
     price: '',
-    image:'',
-    //quantityLimit:''
+    image: '',
+    quantityLimit: ''
   });
 
   const handleChange = (e) => {
@@ -42,31 +35,23 @@ function ProductData() {
     dispatch({
       type: 'ADD_ITEM',
       item: {
+        // id: formData.id,
+        // title: formData.description,
+        // price: formData.price,
+        // image: formData.image,
+        // rating: formData.rating,
+        // maxQuantity:formData.quantityLimit
         id: formData.id,
         title: formData.description,
+        price: Number(formData.price),
         image: formData.image,
-        price: formData.price,
-        rating: formData.rating,
-        //quantityLimit:formData.quantityLimit
+        rating: Number(formData.rating), // 👈 convert to number
+        maxQuantity: Number(formData.quantityLimit)
       },
     })
-    setSubmissionMessage(`Item Saved Successfully`);
+    //setSubmissionMessage(`Item Saved Successfully`);
     setFormData('');
   };
-
-  // const addItem = () => {
-  //   //dispatching the item into the data layer
-  //   dispatch({
-  //     type: 'ADD_ITEM',
-  //     item: {
-  //       id: formData.id,
-  //       title: formData.description,
-  //       image: formData.image,
-  //       price: formData.price,
-  //       rating: formData.rating,
-  //     },
-  //   })
-  // }
 
   return (
     <div className="Product_Adding">
@@ -81,12 +66,6 @@ function ProductData() {
         />
         <label>Decription</label>
         <input type="text"
-          // value={description} // Binds the input's value to the state variable
-          // onChange={(e) => {
-          //   setdescription(e.target.value); // Updates the state with the new input value
-          //   console.log(e.target.value); // Logs the current input value to the console
-          // }}>
-
           name="description"
           value={formData.description}
           onChange={handleChange}
@@ -98,29 +77,30 @@ function ProductData() {
           onChange={handleChange}
         />
         <label>Rating</label>
-        <input type="text"
+        <input type="number"
           name="rating"
+          min="1" max="5"
           value={formData.rating}
           onChange={handleChange}
         />
         <label>Image</label>
         <input type="text"
-           name="image"
-           value={formData.image}
-           onChange={handleChange}
-        ></input>
-        {/* <label>Quantity Available</label> */}
-        {/* <input type="number" 
-           name="quantityLimit"
-           min="1"
-           value={formData.quantityLimit}
-           onChange={handleChange}
-        /> */}
+          name="image"
+          value={formData.image}
+          onChange={handleChange}
+        />
+        <label>Quantity Available</label>
+        <input type="number"
+          name="quantityLimit"
+          min="1"
+          value={formData.quantityLimit}
+          onChange={handleChange}
+        />
 
         <button className="Form_Button" type="submit">Submit</button>
-       
+
       </form>
-      
+
     </div>
   )
 }

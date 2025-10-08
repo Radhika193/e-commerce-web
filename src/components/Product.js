@@ -5,8 +5,8 @@ import { useStateValue } from './StateProvider'
 import { toast, ToastContainer, Slide } from 'react-toastify'
 import QuantityControl from './QuantityControl'
 
-function Product({ id, title, image, price, rating }) {
-  const [{ basket }, dispatch] = useStateValue();
+function Product({ id, title, image, price, rating,maxQuantity }) {
+  const [{ basket, productLists }, dispatch] = useStateValue();
 
   const itemInBasket = basket.find(item => item.id === id);
   const quantity = itemInBasket ? itemInBasket.quantity : 0;
@@ -22,7 +22,8 @@ function Product({ id, title, image, price, rating }) {
         image: image,
         price: price,
         rating: rating,
-        quantity: 1
+        quantity: 1,
+        maxQuantity:maxQuantity
       },
     })
 
@@ -36,6 +37,11 @@ function Product({ id, title, image, price, rating }) {
 
   };
   const increment = () => {
+    if ( quantity >= maxQuantity) {
+      // show alert when trying to exceed
+      alert("These are the maximum items available right now.");
+      return; // stop incrementing
+    }
     const newQty = quantity + 1;
     dispatch({
       type: 'UPDATE_QUANTITY',

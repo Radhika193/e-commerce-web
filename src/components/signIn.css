@@ -1,0 +1,16 @@
+.signInWithGoogle {
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px solid black;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding-left: 145px;
+    border-color: black;
+    
+}
+img{
+    padding-left: 10px;
+}

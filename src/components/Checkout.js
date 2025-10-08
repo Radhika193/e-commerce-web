@@ -7,7 +7,7 @@ import CheckoutProduct from './CheckoutProduct';
 
 function Checkout() {
 
-  const [{basket,user},dispatch] =useStateValue();
+  const [{basket,user,productLists},dispatch] =useStateValue();
 
   return (
     <div className='checkout'>
@@ -30,7 +30,7 @@ function Checkout() {
                  price={item.price}
                  rating={item.rating}
                  quantity={item.quantity}
-                 
+                 maxQuantity={item.maxQuantity}
               />
 
             ))}
